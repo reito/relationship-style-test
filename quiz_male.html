@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>恋愛タイプ診断</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6ac1d0 0%, #5fb5d0 100%);
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(106, 193, 208, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            background-color: #fff;
+            padding: 10px 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        nav a {
+            margin: 5px 10px;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #5fb5d0;
+            font-weight: 500;
+            font-size: 14px;
+            position: relative;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #6ac1d0;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            padding: 20px 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(106, 193, 208, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(106, 193, 208, 0.1);
+        }
+
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(106, 193, 208, 0.15);
+        }
+
+        .question p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(106, 193, 208, 0.1);
+            line-height: 1.6;
+        }
+
+        .question label {
+            display: block;
+            margin: 12px 0;
+            cursor: pointer;
+            padding: 12px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            color: #456;
+            font-size: 15px;
+        }
+
+        .question label:hover {
+            background-color: rgba(106, 193, 208, 0.05);
+        }
+
+        .question input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #5fb5d0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6ac1d0 0%, #5fb5d0 100%);
+            border: none;
+            padding: 16px 30px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto;
+            width: 100%;
+            max-width: 280px;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(106, 193, 208, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(106, 193, 208, 0.4);
+            background: linear-gradient(135deg, #5fb5d0 0%, #54a9c4 100%);
+        }
+
+        .progress {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(106, 193, 208, 0.1);
+            border: 1px solid rgba(106, 193, 208, 0.1);
+            text-align: center;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin: 0;
+            color: #5fb5d0;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #e9f5f7;
+            border-radius: 3px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #6ac1d0 0%, #5fb5d0 100%);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        .progress-percentage {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 20px;
+            }
+
+            nav {
+                padding: 8px 2px;
+            }
+
+            nav a {
+                font-size: 13px;
+                margin: 3px 8px;
+            }
+
+            .question {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .question p {
+                font-size: 15px;
+                padding-bottom: 8px;
+            }
+
+            .question label {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 14px 25px;
+                font-size: 15px;
+                margin: 25px auto;
+            }
+
+            .progress {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+
+            .progress-text {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>恋愛タイプ診断</h1>
+    </header>
+
+    <nav>
+        <a href="https://blanca715.com/">相談所トップ</a>
+        <a href="https://blanca715.com/category/%e3%82%a4%e3%83%99%e3%83%b3%e3%83%88/">イベント情報</a>
+        <a href="https://blanca715.com/contact/">無料相談予約</a>
+        <a href="https://blanca715.com/achievement/">成婚事例</a>
+    </nav>
+
+    <main>
+        <div class="progress">
+            <p class="progress-text">あなたの性格タイプを診断します</p>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" id="progressBarFill"></div>
+            </div>
+            <p class="progress-percentage" style="margin-top: 10px; font-size: 14px; color: #666;">
+                回答済み: <span id="answered-count">0</span> / <span id="totalQuestions">45</span> 問
+            </p>
+        </div>
+
+        <form id="quiz-form" action="result.html" method="GET">
+            <div id="questions"></div>
+            <button class="btn" type="submit">診断結果を見る</button>
+        </form>
+    </main>
+
+    <script>
+        const questions = [
+            {
+                text: "友人との飲み会では、自分が話の中心になることが多い。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "気が付けば、他人の相談にのってアドバイスしていることが多い。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "新しいことに挑戦するのが好きで、思い立ったらすぐ行動するタイプだ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "用事がなければ自分からLINEや電話はしないタイプだ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "リーダーやキャプテンという立場になることが多い方だ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "「どうにかなるさ」と考える方だ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "デートでは、行き先やスケジュールは自分が決めたい方だ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "食事に行く際、相手の好きな食べ物を気にかける方だ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "「突然の予定変更」にも柔軟に対応できる方だ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "「人の話を最後まで聞く」のが得意だ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "目標を立てると「絶対に達成する」と意気込む方だ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "仲間内では「優しい」「気遣いができる」と言われることが多い。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "旅行では、スケジュールをガチガチに決めるより、現地の雰囲気で動きたい。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "「自分の意見はしっかり伝えるべき」と思う。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "家庭より仕事を優先してしまうタイプだ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "「決められたルール」に縛られるのは苦手だ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "わりとコスパ重視なタイプだ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "「困った時は誰かに相談するのが一番」と思う。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "「今が楽しければそれでいい」と思うことがある。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "新しい環境に入ったとき、まずは自分から声をかけることが多い。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "相手の話をじっくり聞いてから、自分の意見を伝えるタイプだ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "「ノリで決めたこと」がうまくいくことが多い。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "「やると決めたら最後までやり遂げるべきだ」と思う。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "服装はデザインよりも着心地を重視する。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "「予定がない週末が一番好き」だ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "結婚したら家事は奥さんに任せたい。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "何事もNo. 1を目指したいタイプ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "結婚したら共働き希望。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "ルールは忠実に守るタイプだ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "年上の女性と付き合うことに抵抗がない。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            // 新しい質問（キング）
+            {
+                text: "普段からオシャレには気を遣っている。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "食事などに行った際女性に奢ってもらうのには抵抗がある。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "思い立ったらすぐに行動するタイプだと思う。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "人から尊敬されたいと思う。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            {
+                text: "人に謝るのはどちらかというと嫌いだ。",
+                scores: { king: 2, knight: 0, prince: 0 }
+            },
+            // 新しい質問（ナイト）
+            {
+                text: "リーダーの立場より支える立場の方があっていると思う。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "女性に対し引っ張るより合わせてしまうことが多い。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "家事育児は積極的に協力したいタイプ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "自分よりは相手を優先するタイプ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            {
+                text: "衝動的な行動はどちらかというと苦手だ。",
+                scores: { king: 0, knight: 2, prince: 0 }
+            },
+            // 新しい質問（プリンス）
+            {
+                text: "まわりから可愛がられるタイプだと思う。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "責任ある仕事や立場にはできるだけ就きたくない",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "自分より収入の多い女性と付き合うことに抵抗はない方だ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "自分の趣味ややりたいことを優先するタイプだ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            },
+            {
+                text: "女性に対して求めるのは癒しだ。",
+                scores: { king: 0, knight: 0, prince: 2 }
+            }
+        ];
+
+        // 質問をシャッフル
+        for (let i = questions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [questions[i], questions[j]] = [questions[j], questions[i]];
+        }
+
+        const questionsContainer = document.getElementById('questions');
+        const answeredCount = document.getElementById('answered-count');
+        const progressBarFill = document.getElementById('progressBarFill');
+
+        // 質問を表示する
+        questions.forEach((question, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `
+                <p>Q${index + 1}. ${question.text}</p>
+                <label>
+                    <input type="radio" name="q${index}" value="yes">
+                    そう思う
+                </label>
+                <label>
+                    <input type="radio" name="q${index}" value="neutral">
+                    どちらとも言えない
+                </label>
+                <label>
+                    <input type="radio" name="q${index}" value="no">
+                    そう思わない
+                </label>
+            `;
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // 進捗を更新する
+        function updateProgress() {
+            const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+            answeredCount.textContent = answered;
+            const progress = (answered / questions.length) * 100;
+            progressBarFill.style.width = `${progress}%`;
+        }
+
+        // ラジオボタンの変更を監視
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', updateProgress);
+        });
+
+        // フォーム送信時の処理
+        document.getElementById('quiz-form').onsubmit = function(event) {
+            event.preventDefault();
+            
+            // すべての質問に回答されているか確認
+            const unansweredQuestions = questions.reduce((acc, _, index) => {
+                if (!document.querySelector(`input[name="q${index}"]:checked`)) {
+                    acc.push(index + 1);
+                }
+                return acc;
+            }, []);
+
+            if (unansweredQuestions.length > 0) {
+                alert(`以下の質問に回答してください：\n質問 ${unansweredQuestions.join(', ')}`);
+                return;
+            }
+            
+            // 各タイプの質問数をカウント
+            const totalQuestions = {
+                king: 10,
+                knight: 10,
+                prince: 10
+            };
+            
+            // 各タイプの「そう思う」の回答数をカウント
+            let selectedAnswers = { king: 0, knight: 0, prince: 0 };
+            
+            questions.forEach((question, index) => {
+                const answer = document.querySelector(`input[name="q${index}"]:checked`);
+                if (answer.value === "yes") {
+                    if (question.scores.king > 0) selectedAnswers.king++;
+                    if (question.scores.knight > 0) selectedAnswers.knight++;
+                    if (question.scores.prince > 0) selectedAnswers.prince++;
+                }
+                // どちらとも言えないは0.5カウント
+                else if (answer.value === "neutral") {
+                    if (question.scores.king > 0) selectedAnswers.king += 0.5;
+                    if (question.scores.knight > 0) selectedAnswers.knight += 0.5;
+                    if (question.scores.prince > 0) selectedAnswers.prince += 0.5;
+                }
+            });
+
+            // パーセンテージを計算
+            const percentages = {
+                king: Math.round((selectedAnswers.king / totalQuestions.king) * 100),
+                knight: Math.round((selectedAnswers.knight / totalQuestions.knight) * 100),
+                prince: Math.round((selectedAnswers.prince / totalQuestions.prince) * 100)
+            };
+
+            // 最も高いパーセンテージのタイプを決定
+            let resultType = Object.entries(percentages).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+            let typeMapping = {
+                'king': 'キングタイプ',
+                'knight': 'ナイトタイプ',
+                'prince': 'プリンスタイプ'
+            };
+
+            // 結果ページへのパラメータを設定
+            const params = new URLSearchParams({
+                result: typeMapping[resultType],
+                king: percentages.king,
+                knight: percentages.knight,
+                prince: percentages.prince,
+                gender: 'male'
+            });
+
+            // 結果ページへリダイレクト
+            window.location.href = `result.html?${params.toString()}`;
+        };
+
+        // 初期進捗状況を表示
+        updateProgress();
+    </script>
+</body>
+</html> 
