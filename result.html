@@ -442,8 +442,8 @@
 
         // バランスタイプの判定
         const isBalanced = userGender === "male" 
-            ? scores["キングタイプ"] === scores["ナイトタイプ"] && scores["キングタイプ"] === scores["プリンスタイプ"]
-            : scores["アイドルタイプ"] === scores["バリキャリタイプ"] && scores["アイドルタイプ"] === scores["マザータイプ"];
+            ? scores.king === scores.knight && scores.king === scores.prince
+            : scores.idol === scores.career && scores.idol === scores.mother;
 
         // 結果を表示
         const resultTypeElement = document.getElementById("resultType");

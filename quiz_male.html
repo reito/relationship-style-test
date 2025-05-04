@@ -538,12 +538,8 @@
                 prince: Math.round((selectedAnswers.prince / totalQuestions.prince) * 100)
             };
 
-            // バランスタイプの判定ロジックを変更
-            const isBalanced = userGender === "male" 
-                ? Math.abs(percentages.king - percentages.knight) <= 10 && 
-                  Math.abs(percentages.king - percentages.prince) <= 10
-                : Math.abs(percentages.king - percentages.knight) <= 10 && 
-                  Math.abs(percentages.king - percentages.prince) <= 10;
+            // バランスタイプの判定
+            const isBalanced = percentages.king === percentages.knight && percentages.king === percentages.prince;
 
             // 最も高いパーセンテージのタイプを決定
             let resultType = Object.entries(percentages).reduce((a, b) => a[1] > b[1] ? a : b)[0];
@@ -555,7 +551,7 @@
 
             // 結果ページへのパラメータを設定
             const params = new URLSearchParams({
-                result: typeMapping[resultType],
+                result: isBalanced ? 'バランスタイプ' : typeMapping[resultType],
                 king: percentages.king,
                 knight: percentages.knight,
                 prince: percentages.prince,
