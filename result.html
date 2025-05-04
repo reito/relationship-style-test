@@ -384,9 +384,9 @@
                 image: "img/career_type.png",
                 name: "バリキャリタイプ"
             },
-            "ナースタイプ": {
-                image: "img/nurse_type.png",
-                name: "ナースタイプ"
+            "マザータイプ": {
+                image: "img/mother_type.png",
+                name: "マザータイプ"
             },
             "バランスタイプ": {
                 male: {
@@ -437,7 +437,7 @@
             : {
                 idol: parseInt(urlParams.get('idol')) || 0,
                 career: parseInt(urlParams.get('career')) || 0,
-                nurse: parseInt(urlParams.get('nurse')) || 0
+                mother: parseInt(urlParams.get('mother')) || 0
             };
 
         // バランスタイプの判定
@@ -484,24 +484,24 @@
             // 女性の場合
             document.getElementById('type1-label').textContent = 'アイドルタイプ';
             document.getElementById('type2-label').textContent = 'バリキャリタイプ';
-            document.getElementById('type3-label').textContent = 'ナースタイプ';
+            document.getElementById('type3-label').textContent = 'マザータイプ';
             
             const idolScore = parseInt(urlParams.get('idol')) || 0;
             const careerScore = parseInt(urlParams.get('career')) || 0;
-            const nurseScore = parseInt(urlParams.get('nurse')) || 0;
+            const motherScore = parseInt(urlParams.get('mother')) || 0;
             
             document.getElementById('type1-percentage').textContent = idolScore;
             document.getElementById('type2-percentage').textContent = careerScore;
-            document.getElementById('type3-percentage').textContent = nurseScore;
+            document.getElementById('type3-percentage').textContent = motherScore;
             
             // アニメーションのために少し遅延を入れる
             setTimeout(() => {
                 document.getElementById('type1-bar').style.width = `${idolScore}%`;
                 document.getElementById('type2-bar').style.width = `${careerScore}%`;
-                document.getElementById('type3-bar').style.width = `${nurseScore}%`;
+                document.getElementById('type3-bar').style.width = `${motherScore}%`;
             }, 100);
 
-            console.log('Female scores:', { idol: idolScore, career: careerScore, nurse: nurseScore });
+            console.log('Female scores:', { idol: idolScore, career: careerScore, mother: motherScore });
         } else {
             // 男性の場合
             document.getElementById('type1-label').textContent = 'キングタイプ';
