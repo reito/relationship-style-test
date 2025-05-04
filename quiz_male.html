@@ -271,7 +271,7 @@
                 scores: { king: 0, knight: 2, prince: 0 }
             },
             {
-                text: "新しいことに挑戦するのが好きで、思い立ったらすぐ行動するタイプだ。",
+                text: "新しいことに挑戦するのが好きだ。",
                 scores: { king: 0, knight: 0, prince: 2 }
             },
             {
@@ -382,7 +382,6 @@
                 text: "年上の女性と付き合うことに抵抗がない。",
                 scores: { king: 0, knight: 0, prince: 2 }
             },
-            // 新しい質問（キング）
             {
                 text: "普段からオシャレには気を遣っている。",
                 scores: { king: 2, knight: 0, prince: 0 }
@@ -403,7 +402,6 @@
                 text: "人に謝るのはどちらかというと嫌いだ。",
                 scores: { king: 2, knight: 0, prince: 0 }
             },
-            // 新しい質問（ナイト）
             {
                 text: "リーダーの立場より支える立場の方があっていると思う。",
                 scores: { king: 0, knight: 2, prince: 0 }
@@ -424,7 +422,6 @@
                 text: "衝動的な行動はどちらかというと苦手だ。",
                 scores: { king: 0, knight: 2, prince: 0 }
             },
-            // 新しい質問（プリンス）
             {
                 text: "まわりから可愛がられるタイプだと思う。",
                 scores: { king: 0, knight: 0, prince: 2 }
@@ -540,6 +537,13 @@
                 knight: Math.round((selectedAnswers.knight / totalQuestions.knight) * 100),
                 prince: Math.round((selectedAnswers.prince / totalQuestions.prince) * 100)
             };
+
+            // バランスタイプの判定ロジックを変更
+            const isBalanced = userGender === "male" 
+                ? Math.abs(percentages.king - percentages.knight) <= 10 && 
+                  Math.abs(percentages.king - percentages.prince) <= 10
+                : Math.abs(percentages.king - percentages.knight) <= 10 && 
+                  Math.abs(percentages.king - percentages.prince) <= 10;
 
             // 最も高いパーセンテージのタイプを決定
             let resultType = Object.entries(percentages).reduce((a, b) => a[1] > b[1] ? a : b)[0];
